@@ -1,0 +1,315 @@
+basePath: /api/v1
+definitions:
+  authentication.LoginRequest:
+    properties:
+      encryption_key:
+        type: string
+      password:
+        type: string
+      path:
+        type: string
+      region:
+        type: string
+      username:
+        type: string
+    type: object
+  authentication.RefreshTokenRequest:
+    properties:
+      token:
+        type: string
+    type: object
+  file.CatRequest:
+    properties:
+      path:
+        type: string
+    type: object
+  file.MkDirRequest:
+    properties:
+      path:
+        example: /hello-test/
+        type: string
+    type: object
+  file.MvRequest:
+    properties:
+      path_from:
+        type: string
+      path_to:
+        type: string
+    type: object
+  file.RmRequest:
+    properties:
+      path:
+        type: string
+    type: object
+  file.TouchRequest:
+    properties:
+      path:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: info@golelinu.com
+    name: API Support
+    url: https://golelinu.com/
+  description: This is where magic happens
+  license: {}
+  termsOfService: http://swagger.io/terms/
+  title: S3 API- GoLelinu
+  version: 1.0.0
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Endpoint to get jwe token
+      parameters:
+      - description: Get jwe token
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/authentication.LoginRequest'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Endpoint to get jwe token
+      tags:
+      - Authorization
+  /auth/refreshtoken:
+    post:
+      consumes:
+      - application/json
+      description: Endpoint to refresh a jwe token
+      parameters:
+      - description: Refresh jwe token
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/authentication.RefreshTokenRequest'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Endpoint to refresh a jwe token
+      tags:
+      - Authorization
+  /file/cat:
+    post:
+      consumes:
+      - application/json
+      description: Endpoint to download a file
+      parameters:
+      - description: Download file
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/file.CatRequest'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Endpoint to download a file
+      tags:
+      - File
+  /file/ls:
+    get:
+      consumes:
+      - application/json
+      description: Endpoint to view directories and files
+      parameters:
+      - description: path
+        in: query
+        name: path
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Endpoint to view directories and files
+      tags:
+      - File
+  /file/mkdir:
+    post:
+      consumes:
+      - application/json
+      description: Endpoint to create a directory
+      parameters:
+      - description: Create directory
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/file.MkDirRequest'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Endpoint to create a directory
+      tags:
+      - File
+  /file/mv:
+    post:
+      consumes:
+      - application/json
+      description: Endpoint to move a file
+      parameters:
+      - description: Move a file
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/file.MvRequest'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Endpoint to move a file
+      tags:
+      - File
+  /file/rm:
+    delete:
+      consumes:
+      - application/json
+      description: Endpoint to delete a bucket/directory inc files or files
+      parameters:
+      - description: Delete bucket/directory/file
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/file.RmRequest'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Endpoint to delete a bucket/directory inc files or files
+      tags:
+      - File
+  /file/save:
+    post:
+      consumes:
+      - application/json
+      description: Endpoint to save a file
+      parameters:
+      - description: path
+        in: formData
+        name: path
+        required: true
+        type: string
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Endpoint to save a file
+      tags:
+      - File
+  /file/stat:
+    get:
+      consumes:
+      - application/json
+      description: Endpoint to view directories and files
+      parameters:
+      - description: path
+        in: query
+        name: path
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Endpoint to get versions of an object
+      tags:
+      - File
+  /file/touch:
+    post:
+      consumes:
+      - application/json
+      description: Endpoint to touch a file
+      parameters:
+      - description: Create a file without content
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/file.TouchRequest'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Endpoint to touch a file
+      tags:
+      - File
+schemes:
+- http
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
