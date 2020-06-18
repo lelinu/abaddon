@@ -1,0 +1,26 @@
+version: '3.3'
+services:
+  api:
+    container_name: 'abaddon-api'
+    image: lelinu/abaddonapi:1.0
+    restart: always
+    build: 
+      context: ./
+      dockerfile: dockerfile
+    ports:
+      - '8080:8080'
+    environment:
+      - API_IS_PROD=false
+      - API_VERSION_URL=api/v1
+      - API_PORT=8080
+      - API_SECRET_KEY=5<KW"{R-D){7%h;<
+      - JWE_ISSUER=https://golelinu.com
+      - JWE_SECRET_KEY=U&#Sn8K=dLr.kwmKA)#zH.mytJU6!q+h
+      - S3_REGION=us-east-2
+      - S3_ENDPOINT=https://api.storage.lelinu.com
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "5"
